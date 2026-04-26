@@ -3,7 +3,7 @@ services:
     name: myblog
     runtime: python
     buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
-    startCommand: gunicorn myblog.wsgi:application --bind 0.0.0.0:$PORT
+    startCommand: sh -c "python manage.py migrate --noinput && gunicorn myblog.wsgi:application --bind 0.0.0.0:$PORT"
     envVars:
       - key: DJANGO_SECRET_KEY
         generateValue: true

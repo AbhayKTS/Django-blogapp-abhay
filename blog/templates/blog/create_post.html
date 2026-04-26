@@ -25,18 +25,48 @@
 
                     <div class="mb-3">
                         <label for="id_title" class="form-label fw-semibold">Post Title</label>
-                        <input type="text" name="title" id="id_title" class="form-control form-control-lg" placeholder="Enter an engaging title..." value="{{ form.title.value|default:'' }}" required>
+                        <input
+                            type="text"
+                            name="title"
+                            id="id_title"
+                            class="form-control form-control-lg{% if form and form.title.errors %} is-invalid{% endif %}"
+                            placeholder="Enter an engaging title..."
+                            value="{{ form.title.value|default:'' }}"
+                            required
+                        >
+                        {% if form and form.title.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.title.errors|striptags }}
+                            </div>
+                        {% endif %}
                     </div>
 
                     <div class="mb-3">
                         <label for="id_content" class="form-label fw-semibold">Content</label>
-                        <textarea name="content" id="id_content" class="form-control" rows="10" placeholder="Write your blog post here..." required>{{ form.content.value|default:'' }}</textarea>
+                        <textarea
+                            name="content"
+                            id="id_content"
+                            class="form-control{% if form and form.content.errors %} is-invalid{% endif %}"
+                            rows="10"
+                            placeholder="Write your blog post here..."
+                            required
+                        >{{ form.content.value|default:'' }}</textarea>
+                        {% if form and form.content.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.content.errors|striptags }}
+                            </div>
+                        {% endif %}
                     </div>
 
                     <div class="mb-4">
                         <label for="id_image" class="form-label fw-semibold">Featured Image</label>
-                        <input type="file" name="image" id="id_image" class="form-control" accept="image/*">
+                        <input type="file" name="image" id="id_image" class="form-control{% if form and form.image.errors %} is-invalid{% endif %}" accept="image/*">
                         <div class="form-text">Upload an image to display with your post (optional).</div>
+                        {% if form and form.image.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.image.errors|striptags }}
+                            </div>
+                        {% endif %}
                     </div>
 
                     <button type="submit" class="btn btn-primary px-5 py-2 fw-semibold">
